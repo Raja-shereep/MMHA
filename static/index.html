@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MMHA-Net | Alzheimer's Diagnosis</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>MMHA-Net</h1>
+        <p>Multimodal Hierarchical Fusion for Alzheimer's Diagnosis</p>
+      </header>
+
+        <div class="main-grid">
+            <!-- MRI Section -->
+            <div class="modality-card">
+                <h2>1. MRI Scan</h2>
+                <div class="upload-container">
+                    <input type="file" id="mri-input" accept="image/*" hidden />
+                    <label for="mri-input" class="custom-file-upload">
+                        <div class="icon">🧠</div>
+                        <span id="mri-filename">Click to Upload MRI</span>
+                    </label>
+                </div>
+                <div id="mri-preview" class="preview-box"></div>
+                <button class="btn btn-primary full-width" onclick="predictMRI()">Analyze MRI</button>
+                
+                <details id="mri-details" class="result-details hidden">
+                    <summary>MRI Result: <span id="mri-summary-status">Pending</span></summary>
+                    <div id="mri-result" class="result-content"></div>
+                </details>
+            </div>
+
+            <!-- EEG Section -->
+            <div class="modality-card">
+                <h2>2. EEG Signal</h2>
+                <div class="upload-container">
+                    <input type="file" id="eeg-input" accept="image/*" hidden />
+                    <label for="eeg-input" class="custom-file-upload">
+                        <div class="icon">📈</div>
+                        <span id="eeg-filename">Click to Upload EEG</span>
+                    </label>
+                </div>
+                <div id="eeg-preview" class="preview-box"></div>
+                <button class="btn btn-primary full-width" onclick="predictEEG()">Analyze EEG</button>
+                
+                <details id="eeg-details" class="result-details hidden">
+                    <summary>EEG Result: <span id="eeg-summary-status">Pending</span></summary>
+                    <div id="eeg-result" class="result-content"></div>
+                </details>
+            </div>
+
+            <!-- Clinical Section -->
+            <div class="modality-card">
+                <h2>3. Clinical Data</h2>
+                <div class="clinical-form">
+                    <div class="form-group">
+                        <label>Age (years): <input type="number" id="clin-age" value="70" min="50" max="100"></label>
+                        <label>Gender: 
+                            <select id="clin-gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </label>
+                    </div>
+                     <div class="form-group">
+                        <label>Ethnicity: 
+                            <select id="clin-ethnicity">
+                                <option value="Caucasian">Caucasian</option>
+                                <option value="African American">African American</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Hispanic">Hispanic</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </label>
+                         <label>Education: 
+                            <select id="clin-education">
+                                <option value="High School">High School</option>
+                                <option value="Bachelor's">Bachelor's</option>
+                                <option value="Higher">Higher</option>
+                                <option value="None">None</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                         <label>BMI: <input type="number" id="clin-bmi" value="25.0" step="0.1"></label>
+                         <label>Smoking: 
+                            <select id="clin-smoking">
+                                <option value="Never">Never</option>
+                                <option value="Former">Former</option>
+                                <option value="Current">Current</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                         <label>MMSE Score (0-30): <input type="number" id="clin-mmse" value="28" min="0" max="30"></label>
+                          <label>ADL Score (0-10): <input type="number" id="clin-adl" value="10" min="0" max="10"></label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="clin-family"> Family History Alzheimer's</label>
+                        <label><input type="checkbox" id="clin-diabetes"> Diabetes</label>
+                        <label><input type="checkbox" id="clin-hypertension"> Hypertension</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="clin-memory"> Memory Complaints</label>
+                        <label><input type="checkbox" id="clin-confusion"> Confusion</label>
+                        <label><input type="checkbox" id="clin-disorientation"> Disorientation</label>
+                        <label><input type="checkbox" id="clin-forgetfulness"> Forgetfulness</label>
+                    </div>
+                </div>
+                <button class="btn btn-primary full-width" onclick="predictClinical()">Analyze Clinical Data</button>
+                
+                <details id="clinical-details" class="result-details hidden">
+                    <summary>Clinical Result: <span id="clinical-summary-status">Pending</span></summary>
+                    <div id="clinical-result" class="result-content"></div>
+                </details>
+            </div>
+        </div>
+
+        <!-- Fusion Section -->
+        <div class="fusion-section">
+            <h2>Multimodal Fusion Result</h2>
+            <p>Gemini will synthesize available data (MRI, EEG, Clinical) into a final report.</p>
+            <button class="btn btn-primary btn-large" onclick="generateFusion()">Generate Final Diagnosis</button>
+            <div id="fusion-result" class="result-box hidden"></div>
+        </div>
+
+      <footer>
+        <p>&copy; 2026 MMHA-Net Project</p>
+      </footer>
+    </div>
+    <script src="/static/script.js?v=2"></script>
+  </body>
+</html>
